@@ -1,4 +1,3 @@
-window.addEventListener("load",()=>{
 // 지도 변수
 let vwmap;
 
@@ -35,6 +34,7 @@ function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
             url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Hybrid/{z}/{y}/{x}.png' // WMTS API 사용
         })
     });
+    //console.log("vwmapCreate() : " + _layer);
     //console.log("_lat : " + _lat + ", _lng : " + _lng);
     //map-content에 ol지도 지정
     vwmap = new ol.Map({
@@ -157,5 +157,3 @@ function addVwmapPolygon(coordinates,_pnu,_jibun){
     vector_layer.setZIndex(200); // 레이어 z-index 설정
     vector_layer.setVisible(true);
 } // End Function addVwmapPolygon()
-
-});
