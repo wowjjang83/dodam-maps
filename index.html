@@ -29,7 +29,7 @@
             </div>
             <div class="right">
                 <span></span>
-                <a href="#">
+                <a id="main-login-btn" href="#">
                     <img src="img/login.png" alt="로그인">
                 </a>
             </div>
@@ -58,7 +58,7 @@
             <img src="img/dodam_logo_footer.png" alt="Dodam Maps">
         </div>
         <div class="close-btn">
-            <button type="button">
+            <button id="login-close" type="button">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -94,8 +94,25 @@
 
     <script>
         $(document).ready(function(){
-            //$('.vwmap').vwmap();
             vwmapCreate("vwmap");
+
+            // 로그인 버튼 크릭
+            $('#main-login-btn').click(function(){
+                // 로그인창 레이어 팝업
+                $('.login').css('display', 'block');
+                $('.login').animate({
+                    opacity: 1
+                }, 300);
+            });
+
+            // 로그인창 닫기 버튼 클릭
+            $('#login-close').click(function(){
+                $('.login').animate({
+                    opacity: 0
+                }, 300, function(){
+                    $('.login').css('display', 'none');
+                });
+            });
         });
     </script>
 </body>
