@@ -4,8 +4,9 @@ let vwmap;
 //브이월드 인증키
 let vw_apikey = '429F4193-A25C-31FF-9695-4BE5FE4E43AD';
 //좌표계
-let vw_epsg = 'EPSG:3857';
-//vw_epsg = 'EPSG:4326';
+//let vw_epsg = 'EPSG:3857';
+//let vw_epsg = 'EPSG:4326';
+let vw_epsg = 'EPSG:900913';
 
 // 브이월드 맵 생성
 function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
@@ -85,7 +86,7 @@ function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
 
 // 브이월드 맵 이동
 function vwmapMove(_lng,_lat){
-    vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], 'EPSG:4326', vw_epsg));
+    vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], vw_epsg, vw_epsg));
 }
 
 // 폴리곤 그리기
@@ -157,3 +158,69 @@ function addVwmapPolygon(coordinates,_pnu,_jibun){
     vector_layer.setZIndex(200); // 레이어 z-index 설정
     vector_layer.setVisible(true);
 } // End Function addVwmapPolygon()
+
+function vwmapSearchAddr(_addr){
+    console.log("vwmapSearchAddr() 함수실행 : " + _addr);
+    // ajax
+    $.ajax({
+        url: "https://api.vworld.kr/req/search",
+        type: "GET",
+        data: {
+            service: "search",
+            request: "search",
+            version: "2.0",
+            key: vw_apikey,
+            query: _addr,
+            type: "ADDRESS",
+            category: "PARCEL", // or ROAD
+            crs: vw_epsg,
+            errorformat: "json"
+        },
+        dataType: "jsonp",
+        success: function (data) {
+            //console.log(data);
+            if(data.response.status == "OK"){
+                var lat = data.response.result.items[0].point.y;
+                var lng = data.response.result.items[0].point.x;
+
+                vwmapMove(lng,lat);
+            }
+        }
+    });
+}
+
+// 관련주소리스트 출력
+function vwmapSearchAddrList(_keyword){
+    //console.log("vwmapSearchAddrList() 함수실행 : " + _keyword);
+    // ajax
+    $.ajax({
+        url: "https://api.vworld.kr/req/search",
+        type: "GET",
+        data: {
+            service: "search",
+            request: "search",
+            version: "2.0",
+            key: vw_apikey,
+            query: _keyword,
+            type: "ADDRESS",
+            category: "PARCEL", // or ROAD
+            size: 5,
+            crs: vw_epsg,
+            errorformat: "json"
+        },
+        dataType: "jsonp",
+        success: function (data) {
+            //console.log(data);
+            if(data.response.status == "OK"){
+                var items = data.response.result.items;
+                //var _tot = (items.length>5)? 5:items.length;
+                var html = "";
+                for(var i=0; i<items.length; i++){
+                    html += "<li><a href='javascript:vwmapSearchAddr(\""+items[i].address.parcel+"\");'>"+items[i].address.parcel+"</a></li>";
+                }
+                $("#searchAddrList").html(html);
+            }
+        }
+    });
+}
+
