@@ -1,18 +1,23 @@
 @charset "UTF-8";
+// [ Variables ]
 
 // [ Import ]
 @import "reset";
-//@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto:wght@100&display=swap');
-//@import "header";
-//@import "content";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
 
 $active-color: skyblue; //135,206,235;
 $hover-color: skyblue; //135,206,235
 $focus-color: skyblue; //135,206,235
 $shadow-color: rgb(0,0,0);
-$shadow-hover-color: $hover-color;
-$shadow-active-color:$active-color;
-$shadow-focus-color: $focus-color;
+
+@import "login";
+
+body {
+    font: 12px/1.5 'Nanum Gothic', sans-serif;
+    font-weight: 400;
+}
+
 
 main {
     width: 100%;

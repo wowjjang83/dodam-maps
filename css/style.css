@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -14,6 +15,228 @@ a {
 
 body {
   background: #333;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 5;
+}
+.login .logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: none;
+}
+.login .logo img:hover {
+  cursor: pointer;
+}
+.login .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 40px;
+  border: 0;
+}
+.login .close-btn button {
+  background: transparent;
+  border: 0;
+}
+.login .close-btn button i {
+  font-size: 40px;
+  color: #fff;
+  transition: all ease 0.5s;
+}
+.login .close-btn button i:hover {
+  cursor: pointer;
+  transform: rotate(90deg);
+  color: #00b4ff;
+}
+.login .login-box {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 470px;
+  height: 475px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.login .login-box .login-title {
+  position: relative;
+  top: 22px;
+  left: 0px;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  color: #7f7f7f;
+  text-align: center;
+  font-family: "Naum Gothic", sans-serif;
+}
+.login .login-box .login-title h2 {
+  line-height: 50px;
+  font-size: 22px;
+  font-weight: 700;
+}
+.login .login-box .login-title h2 b {
+  font-size: 28px;
+  color: #2f5597;
+}
+.login .login-box .login-title p {
+  line-height: 25px;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0px;
+}
+.login .login-box .login-con {
+  position: relative;
+  margin-top: 70px;
+  width: 100%;
+  background: #fff;
+  border-radius: 0px 0px 10px 10px;
+  text-align: center;
+  line-height: 350px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+.login .login-box .login-con .login-input {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+.login .login-box .login-con .login-input input {
+  width: 380px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  outline: none;
+  background: #fff;
+}
+.login .login-box .login-con .login-btn {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  top: -90px;
+}
+.login .login-box .login-con .login-btn button {
+  width: 380px;
+  height: 40px;
+  background: #2f5597;
+  border-radius: 5px;
+  color: #fff;
+  font: 16px "Nanum Gothic", sans-serif;
+  border: 0px;
+}
+.login .login-box .login-con .login-btn button:hover {
+  cursor: pointer;
+}
+.login .login-box .login-con .login-find-link {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin-top: 65px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+}
+.login .login-box .login-con .login-find-link a {
+  color: #2f5597;
+  text-decoration: none;
+  font-size: 12px;
+  color: #000;
+  transition: 0.2s;
+}
+.login .login-box .login-con .login-find-link a:nth-of-type(1) {
+  margin-right: 10px;
+}
+.login .login-box .login-con .login-find-link a:nth-of-type(2) {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.login .login-box .login-con .login-find-link a:nth-of-type(3) {
+  margin-left: 10px;
+}
+.login .login-box .login-con .login-find-link a:hover {
+  text-decoration: none;
+  color: #2f5597;
+  text-shadow: 0px 0px 1px skyblue;
+}
+.login .login-box .login-con .login-sns {
+  position: relative;
+  width: 81%;
+  height: 50px;
+  margin: 0px auto;
+}
+.login .login-box .login-con .login-sns .kakao-btn {
+  position: absolute;
+  width: 380px;
+  height: 40px;
+  top: 0px;
+  left: 0px;
+}
+.login .login-box .login-con .login-sns .kakao-btn button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: #fee500;
+  border-radius: 5px;
+  color: #fff;
+  font: 16px "Nanum Gothic", sans-serif;
+  border: 0px;
+  background-image: url("../img/kakao_login_medium.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.login .login-box .login-con .login-sns .kakao-btn button:hover {
+  cursor: pointer;
+}
+.login .login-box .login-con .login-sns .naver-btn {
+  position: absolute;
+  width: 380px;
+  height: 40px;
+  top: 48px;
+}
+.login .login-box .login-con .login-sns .naver-btn button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: #03c75a;
+  border-radius: 5px;
+  color: #fff;
+  font: 16px "Nanum Gothic", sans-serif;
+  border: 0px;
+  background-image: url("../img/naver_login.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 32%;
+}
+.login .login-box .login-con .login-sns .naver-btn button:hover {
+  cursor: pointer;
+}
+
+body {
+  font: 12px/1.5 "Nanum Gothic", sans-serif;
+  font-weight: 400;
 }
 
 main {

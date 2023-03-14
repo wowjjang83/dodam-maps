@@ -1,0 +1,260 @@
+.login {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    //background: #fff;
+    // background opacity
+    background: rgba(0,0,0,0.9);
+    z-index: 5;
+
+    .logo {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display:none;
+
+        img {
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 0px;
+        width: 40px;
+        //border: 1px solid red;
+        border: 0;
+
+        button {
+            background: transparent;
+            border: 0;
+            
+            i {
+                font-size: 40px;
+                color: #fff;
+                transition: all ease 0.5s;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: rotate(90deg);
+                    color: #00b4ff;
+                }
+            }
+        }
+    }
+
+    .login-box {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 470px;
+        height: 475px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba($shadow-color,0.2);
+
+        .login-title {
+            position: relative;
+            top: 22px;
+            left: 0px;
+            width: 100%;
+            height: 50px;
+            background: #fff;
+            color: #7f7f7f;
+            text-align: center;
+            font-family: 'Naum Gothic', sans-serif;
+            
+
+            h2 {
+                line-height: 50px;
+                font-size: 22px;
+                font-weight: 700;
+
+                b {
+                    font-size: 28px;
+                    color: #2f5597;
+                }
+            }
+
+            p {
+                line-height: 25px;
+                font-size: 20px;
+                font-weight: 400;
+                letter-spacing: 0px;
+            }
+        }
+
+        .login-con {
+            position: relative;
+            margin-top: 70px;
+            width: 100%;
+            background: #fff;
+            border-radius: 0px 0px 10px 10px;
+            //box-shadow: 0px 0px 10px rgba($shadow-color,0.3);
+            text-align: center;
+            line-height: 350px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+
+            .login-input {
+                position: relative;
+                width: 100%;
+                height: 50px;
+                background: #fff;
+                border-radius: 10px;
+                //box-shadow: 0px 0px 10px rgba($shadow-color,0.3);
+                text-align: center;
+                line-height: 50px;
+                font-size: 20px;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 10px;
+
+                input {
+                    width: 380px;
+                    height: 40px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 0px 10px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #333;
+                    outline: none;
+                    background: #fff;
+                    //box-shadow: 0px 0px 3px rgba($shadow-color,0.3);
+                }
+            }
+
+            .login-btn {
+                position: relative;
+                width: 100%;
+                height: 50px;
+                top:-90px;
+
+                button {
+                    width: 380px;
+                    height: 40px;
+                    background: #2f5597;
+                    border-radius: 5px;
+                    color: #fff;
+                    font: 16px 'Nanum Gothic', sans-serif;
+                    border: 0px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .login-find-link {
+                position: relative;
+                width: 100%;
+                height: 50px;
+                //top:0px;
+                margin-top:65px;
+                text-align: center;
+                line-height: 50px;
+                font-size: 16px;
+                font-weight: 400;
+                color: #000;
+
+                a {
+                    color: #2f5597;
+                    text-decoration: none;
+                    font-size: 12px;
+                    color:#000;
+                    transition: 0.2s;
+
+                    &:nth-of-type(1) {
+                        margin-right: 10px;
+                    }
+                    &:nth-of-type(2) {
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
+                    &:nth-of-type(3) {
+                        margin-left: 10px;
+                    }
+                }
+
+                a:hover {
+                    text-decoration: none;
+                    color: #2f5597;
+                    //font-weight: 700;
+                    text-shadow: 0px 0px 1px rgba($hover-color,1);
+                }
+            }
+
+            .login-sns {
+                //display: contents;
+                position: relative;
+                width: 81%;
+                height: 50px;
+                //top:-135px;
+                //text-align: center;
+                margin: 0px auto;
+
+                .kakao-btn {
+                    position: absolute;
+                    width: 380px;
+                    height: 40px;
+                    top: 0px;
+                    left:0px;
+
+                    button {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        transform: translateX(-50%);
+                        background: #fee500;
+                        border-radius: 5px;
+                        color: #fff;
+                        font: 16px 'Nanum Gothic', sans-serif;
+                        border: 0px;
+                        background-image: url("../img/kakao_login_medium.png");
+                        background-repeat: no-repeat;
+                        background-position: center;
+    
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .naver-btn {
+                    position: absolute;
+                    width: 380px;
+                    height: 40px;
+                    top: 48px;
+
+                    button {
+                        position:absolute;                        
+                        width: 100%;
+                        height: 100%;
+                        transform: translateX(-50%);
+                        background: #03c75a;
+                        border-radius: 5px;
+                        color: #fff;
+                        font: 16px 'Nanum Gothic', sans-serif;
+                        border: 0px;
+                        background-image: url("../img/naver_login.png");
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: 32%;
+    
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}
