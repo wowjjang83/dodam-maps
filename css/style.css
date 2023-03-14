@@ -301,6 +301,34 @@ main nav .right {
   height: 50px;
   top: 0px;
   right: 0px;
+  font-size: 16px;
+}
+main nav .right span {
+  overflow: hidden;
+}
+main nav .right span b a {
+  color: #2f5597;
+  font-weight: bold;
+  transition: 0.5;
+  overflow: hidden;
+}
+main nav .right span b a::after {
+  content: "";
+  clear: both;
+  float: left;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 7px;
+  left: 0px;
+  background: #2f5597;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+main nav .right span b a:hover::after {
+  visibility: visible;
+  transform: scaleX(1);
 }
 main nav .right img {
   position: relative;
