@@ -86,7 +86,10 @@ function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
 
 // 브이월드 맵 이동
 function vwmapMove(_lng,_lat){
+    //console.log("vwmapMove() : " + _lng + ", " + _lat);
     vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], vw_epsg, vw_epsg));
+
+    $('.sch .search-list').css('display', 'none');
 }
 
 // 폴리곤 그리기
@@ -159,7 +162,7 @@ function addVwmapPolygon(coordinates,_pnu,_jibun){
     vector_layer.setVisible(true);
 } // End Function addVwmapPolygon()
 
-function vwmapSearchAddr(_addr){
+function vwmapSearchAddr(_opt1, _opt2, _addr){
     console.log("vwmapSearchAddr() 함수실행 : " + _addr);
     // ajax
     $.ajax({
@@ -171,8 +174,8 @@ function vwmapSearchAddr(_addr){
             version: "2.0",
             key: vw_apikey,
             query: _addr,
-            type: "ADDRESS",
-            category: "PARCEL", // or ROAD
+            type: _opt1,
+            category: _opt2, // or ROAD
             crs: vw_epsg,
             errorformat: "json"
         },
@@ -190,7 +193,7 @@ function vwmapSearchAddr(_addr){
 }
 
 // 관련주소리스트 출력
-function vwmapSearchAddrList(_keyword){
+function vwmapSearchAddrList(_opt1,_opt2,_keyword){
     //console.log("vwmapSearchAddrList() 함수실행 : " + _keyword);
     // ajax
     $.ajax({
@@ -202,21 +205,43 @@ function vwmapSearchAddrList(_keyword){
             version: "2.0",
             key: vw_apikey,
             query: _keyword,
-            type: "ADDRESS",
-            category: "PARCEL", // or ROAD
+            type: _opt1,//"ADDRESS",
+            category: _opt2,//"PARCEL", // or ROAD
             size: 5,
             crs: vw_epsg,
             errorformat: "json"
         },
         dataType: "jsonp",
         success: function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.response.status == "OK"){
                 var items = data.response.result.items;
                 //var _tot = (items.length>5)? 5:items.length;
                 var html = "";
+                _opt1 = _opt1.toLowerCase();
+                _opt2 = _opt2.toLowerCase();
+
+                console.log("_opt1 : "+_opt1);
                 for(var i=0; i<items.length; i++){
-                    html += "<li><a href='javascript:vwmapSearchAddr(\""+items[i].address.parcel+"\");'>"+items[i].address.parcel+"</a></li>";
+                    var _lng = items[i].point.x;
+                    var _lat = items[i].point.y;
+
+                    html += "<a href='javascript:vwmapMove(\""+_lng+"\",\""+_lat+"\");'><li>";
+
+                    if(_opt1 == "address"){
+                        html +=  "<b>"+items[i][_opt1][_opt2]+"</b>";
+                    }else if(_opt1 == "place"){
+                        var _cate_list = items[i].category.split(" > ");
+                        var _last_cate = _cate_list[_cate_list.length-1];
+                        html += "["+_last_cate+"] <b>"+items[i].title+"</b>";
+                    }else if(_opt1 == "district"){
+                        /* 행정구역은 미구현
+                        var _cate_list = items[i].category.split(" > ");
+                        var _last_cate = _cate_list[_cate_list.length-1];
+                        html += "<li><a href='javascript:vwmapSearchAddr(\""+items[i].title+"\");'><b>"+items[i].title+"</b></a></li>";
+                        */
+                    }
+                    html +=  "</li></a>";
                 }
                 $("#searchAddrList").html(html);
             }

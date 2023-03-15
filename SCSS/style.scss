@@ -44,11 +44,16 @@ main {
         }
 
         .sch {
-            display: inline-block;
-            position: relative;
-            top: 0px;
-            left: 100px;
-            width: auto;
+            display: block;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            //left: 100px;
+            margin: 0 auto;
+            translate: -50%;
+            
+            //width: 100%;
+            //text-align: center;
             // search input css
             input {                
                 width: 300px;
@@ -72,30 +77,19 @@ main {
             button {
                 position: absolute;
                 top: 6px;
-                //left: 0px;
                 right: 7px;
                 font-size: 14px;
                 padding: 1px 2px;
                 background: transparent;
                 border: 0px;
-                //cursor: none;                
-                /*
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-shadow: 0px 0px 5px rgba($shadow-color,0.1);
-                */
-                /*
-                &:hover {
-                    box-shadow: 0px 0px 5px rgba($hover-color,1);
-                }
-                */
             }
 
             // 검색 리스트
             .search-list {
+                display: none;
                 position: absolute;
                 top: 30px;
-                left: 0px;
+                left: 104px; //204px;
                 width: 300px;
                 //height: 100px;
                 background: #fff;
@@ -106,21 +100,83 @@ main {
                 //overflow-y: scroll;
                 z-index: 3;
 
-                li {
-                    width: 100%;
-                    height: 40px;
-                    //line-height: 20px;
-                    padding: 10px 10px;
-                    font-size: 12px;
-                    border-bottom: 1px solid #ececec;
-                    cursor: pointer;
+                a {
+                    color: $a-color;
 
-                    a {
-                        color: $a-color;
+                    li {
+                        width: 100%;
+                        //height: 40px;
+                        //line-height: 20px;
+                        padding: 10px 10px;
+                        font-size: 12px;
+                        border-bottom: 1px solid #ececec;
+                        cursor: pointer;
+    
+                        &:hover {
+                            background: #f5f5f5;
+                        }
                     }
-                    &:hover {
-                        background: #f5f5f5;
-                    }
+                }
+                
+            }
+
+            // 검색옵션 1
+            #sch-opt {
+                // position: absolute;
+                // top: 30px;
+                // left: 0px;
+                width: 100px;
+                height: 30px;
+                background: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px rgba($shadow-color,0.1);
+                padding: 5px;
+
+                // 포커스시
+                &:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 5px rgba($focus-color,1);
+                }
+            }
+
+            // 검색옵션 2 : 주소검색 상세옵션
+            #addr-opt-detail {
+                // position: absolute;
+                // top: 30px;
+                // left: 0px;
+                //display: none;
+                width: 100px;
+                height: 30px;
+                background: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px rgba($shadow-color,0.1);
+
+                // 포커스시
+                &:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 5px rgba($focus-color,1);
+                }
+            }
+
+            // 검색옵션 3 : 행정구역 상세옵션
+            #dist-opt-detail {
+                // position: absolute;
+                // top: 30px;
+                // left: 0px;
+                display: none;
+                width: 100px;
+                height: 30px;
+                background: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px rgba($shadow-color,0.1);
+
+                // 포커스시
+                &:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 5px rgba($focus-color,1);
                 }
             }
         }
