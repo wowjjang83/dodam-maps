@@ -73,6 +73,9 @@
             </div>
         </aside>
         <div class="con">
+            <div class="title">
+                <h1>주소나 장소명 타이틀</h1>
+            </div>
             <div id="vwmap"></div>
         </div>
     </main>
@@ -243,6 +246,13 @@
 
             // $('#sch-opt') select option 변경시
             $('#sch-opt').change(function(){
+                if($('#sch-opt').val() != sch_opt){
+                    // 타이틀 Off
+                    $('.con .title').animate({
+                        top: 0
+                    },500);
+                }
+
                 sch_opt = $('#sch-opt').val();
                 $('.sch input').val("");
                 $("#searchAddrList").empty();
@@ -271,6 +281,10 @@
                 schInputHolderTxt();
 
                 if($('#addr-opt-detail').val() != sch_opt2){
+                    // 타이틀 Off
+                    $('.con .title').animate({
+                        top: 0
+                    },500);
                     $('.sch input').val("");
                     $("#searchAddrList").empty();
                 }

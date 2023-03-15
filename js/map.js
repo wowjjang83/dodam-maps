@@ -91,9 +91,17 @@ function vwmapMove(_lng,_lat,_addr, _title=""){
 
     if(_title != ""){
         $('.sch input').val(_title);
+        $('.con .title h1').text(_title);
     }else{
         $('.sch input').val(_addr);
+        $('.con .title h1').text(_addr);
     }
+
+    // $('.con .title) 등장 animate
+    $('.con .title').animate({
+        top: 50
+    },500);
+
     $('.sch .search-list').css('display', 'none');
 }
 
@@ -186,12 +194,27 @@ function vwmapSearchAddr(_opt1, _opt2, _addr){
         },
         dataType: "jsonp",
         success: function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.response.status == "OK"){
-                var lat = data.response.result.items[0].point.y;
-                var lng = data.response.result.items[0].point.x;
+                var items = data.response.result.items;
+                var lat = items[0].point.y;
+                var lng = items[0].point.x;
+                var _get_addr = "";
+                var _title = "";
 
-                vwmapMove(lng,lat);
+                _opt1 = _opt1.toLowerCase();
+                _opt2 = _opt2.toLowerCase();
+
+                if(_opt1 == "address"){
+                    _get_addr = items[0][_opt1][_opt2];
+                    
+                }else if(_opt1 == "place"){
+                    _get_addr = items[0].address.parcel;
+                    _title = items[0].title;
+                    
+                }
+
+                vwmapMove(lng,lat,_get_addr,_title);
             }
         }
     });
