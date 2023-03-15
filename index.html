@@ -72,6 +72,41 @@
                 </a>
             </div>
         </aside>
+        <div class="zone-pop">
+            <div class="title">
+                <h2>구역계설정</h2>
+                <button type="button">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="con">
+                <section class="sec1">
+                    <h3>예상 차감 면적</h3>
+                    <p>
+                        선택된 구역계 면적 0㎡ ※구역계 편입 유무에 따라 분석면적과 다를 수 있음<br>
+                        필지수 <span><a href="#">0</a></span> 필지<br>
+                        차감 면적 <span><a href="#">0</a></span> ㎡
+                    </p>
+                </section>
+                <section class="sec2">
+                    <h3>소재지</h3>
+                    <div class="con">
+                        <table>
+                            <tr>
+                                <th>주소</th>
+                                <th>면적㎡</th>
+                                <th>편입상태</th>
+                                <th>위치</th>
+                            </tr>
+                            <tr>
+                                <td colspan="4">데이터가 없습니다.</td>
+                            </tr>
+                        </table>
+                        <div class="pg">&lt; &gt;</div>
+                    </div>
+                </section>
+            </div>
+        </div>
         <div class="con">
             <div class="title">
                 <h1>주소나 장소명 타이틀</h1>
@@ -209,6 +244,7 @@
 
                         // 주소검색
                         vwmapSearchAddr(_opt1, _opt2, search);
+                        
                     }
                 }
             });
@@ -276,6 +312,9 @@
                     $('#addr-opt-detail').css('display', 'none');
                     $('#dist-opt-detail').css('display', 'none');
                 }
+
+                // 포커스 input
+                $('.sch input').focus();
             });
             $('#addr-opt-detail').change(function(){
                 schInputHolderTxt();
@@ -290,6 +329,9 @@
                 }
 
                 sch_opt2 = $('#addr-opt-detail').val();
+
+                // 포커스 input
+                $('.sch input').focus();
             });
 
             function schInputHolderTxt(){
@@ -353,6 +395,8 @@
 
             // 초기실행
             schInputHolderTxt();
+            // 포커스 input
+            $('.sch input').focus();
         });
     </script>
 </body>
