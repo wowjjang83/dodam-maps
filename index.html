@@ -239,6 +239,7 @@
 
             let sch_focus = false;
             let sch_opt = "";
+            let sch_opt2 = "";
 
             // $('#sch-opt') select option 변경시
             $('#sch-opt').change(function(){
@@ -268,6 +269,13 @@
             });
             $('#addr-opt-detail').change(function(){
                 schInputHolderTxt();
+
+                if($('#addr-opt-detail').val() != sch_opt2){
+                    $('.sch input').val("");
+                    $("#searchAddrList").empty();
+                }
+
+                sch_opt2 = $('#addr-opt-detail').val();
             });
 
             function schInputHolderTxt(){

@@ -85,10 +85,15 @@ function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
 } // End Function vwmapCreate()
 
 // 브이월드 맵 이동
-function vwmapMove(_lng,_lat){
+function vwmapMove(_lng,_lat,_addr, _title=""){
     //console.log("vwmapMove() : " + _lng + ", " + _lat);
     vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], vw_epsg, vw_epsg));
 
+    if(_title != ""){
+        $('.sch input').val(_title);
+    }else{
+        $('.sch input').val(_addr);
+    }
     $('.sch .search-list').css('display', 'none');
 }
 
@@ -220,20 +225,27 @@ function vwmapSearchAddrList(_opt1,_opt2,_keyword){
                 var html = "";
                 _opt1 = _opt1.toLowerCase();
                 _opt2 = _opt2.toLowerCase();
+                var _addr = "";
+                var _title = "";
 
                 console.log("_opt1 : "+_opt1);
                 for(var i=0; i<items.length; i++){
                     var _lng = items[i].point.x;
                     var _lat = items[i].point.y;
-
-                    html += "<a href='javascript:vwmapMove(\""+_lng+"\",\""+_lat+"\");'><li>";
+                    
+                    html += "<a href='javascript:vwmapMove(\""+_lng+"\",\""+_lat+"\",";
 
                     if(_opt1 == "address"){
-                        html +=  "<b>"+items[i][_opt1][_opt2]+"</b>";
+                        _addr = items[i][_opt1][_opt2];
+                        html +=  "\""+_addr+"\");'><li>";
+                        html +=  "<b>"+_addr+"</b>";
                     }else if(_opt1 == "place"){
+                        _addr = items[i].address.parcel;
+                        _title = items[i].title;
+                        html +=  "\""+_addr+"\",\""+_title+"\");'><li>";
                         var _cate_list = items[i].category.split(" > ");
                         var _last_cate = _cate_list[_cate_list.length-1];
-                        html += "["+_last_cate+"] <b>"+items[i].title+"</b>";
+                        html += "["+_last_cate+"] <b>"+_title+"</b>";
                     }else if(_opt1 == "district"){
                         /* 행정구역은 미구현
                         var _cate_list = items[i].category.split(" > ");
