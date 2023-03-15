@@ -246,10 +246,12 @@
                 $('.sch input').val("");
                 $("#searchAddrList").empty();
 
+                schInputHolderTxt();
+
                 if($('#sch-opt').val() == "ADDRESS"){
                     $('.sch .search-list').css('left', '208px');
                     $('#addr-opt-detail').css('display', 'inline-block');
-                    $('#dist-opt-detail').css('display', 'none');
+                    $('#dist-opt-detail').css('display', 'none');                   
                 }else if($('#sch-opt').val() == "PLACE"){
                     $('.sch .search-list').css('left', '104px');
                     $('#addr-opt-detail').css('display', 'none');
@@ -263,7 +265,36 @@
                     $('#addr-opt-detail').css('display', 'none');
                     $('#dist-opt-detail').css('display', 'none');
                 }
-            });            
+            });
+            $('#addr-opt-detail').change(function(){
+                schInputHolderTxt();
+            });
+
+            function schInputHolderTxt(){
+                var _txt1 = "";
+                var _txt2 = "";
+                
+                if($('#sch-opt').val()=="ADDRESS"){
+                    _txt1 = "주소";
+
+                    if($('#addr-opt-detail').val()=="PARCEL"){
+                        _txt2 = "지번";
+                    }else if($('#addr-opt-detail').val()=="ROAD"){
+                        _txt2 = "도로명";
+                    }
+
+                    
+                    $('.sch input').attr('placeholder', _txt1+'('+_txt2+')를 입력해주세요');
+                }else if($('#sch-opt').val()=="PLACE"){
+                    _txt1 = "장소";
+
+                    $('.sch input').attr('placeholder', _txt1+'를 입력해주세요'); 
+                }
+
+                if(_txt1 == ""){
+                    $('.sch input').attr('placeholder', '옵션을 선택해주세요');    
+                }
+            }
             
             //
             $('.sch input').focusout(function() {
@@ -297,6 +328,9 @@
                 $('.sch .search-list').css('display', 'block');
                 sch_focus = true;
             });
+
+            // 초기실행
+            schInputHolderTxt();
         });
     </script>
 </body>
