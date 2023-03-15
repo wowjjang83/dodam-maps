@@ -61,7 +61,7 @@
         <aside>
             <ul>
                 <li>
-                    <a href="#">
+                    <a id="zone-pop-icon" href="#">
                         <img src="img/zone_icon.png" alt="구역계 설정">
                     </a>
                 </li>
@@ -158,7 +158,7 @@
         $(document).ready(function(){
             vwmapCreate("vwmap");
 
-            // 로그인 버튼 크릭
+            // 로그인 버튼 클릭
             $('#main-login-btn').click(function(){
                 if($('#login-msg').attr('status') == 'in'){
                     // 로그인상태 > 로그아웃 alert 띄우기
@@ -391,6 +391,27 @@
                 */
                 $('.sch .search-list').css('display', 'block');
                 sch_focus = true;
+            });
+
+            // 구역계 팝업 열기
+            $("#zone-pop-icon").click(function(){
+                $('.zone-pop').css('display', 'block');
+                
+                $('.zone-pop').animate({
+                    opacity: 1,
+                    right: 5
+                },500);
+            });
+
+            // 구역계창 닫기 버튼 클릭
+            $('.zone-pop .title button').click(function(){
+
+                $('.zone-pop').animate({
+                    opacity: 0,
+                    right: 50
+                },300, function(){
+                    $('.zone-pop').css('display', 'none');
+                });
             });
 
             // 초기실행

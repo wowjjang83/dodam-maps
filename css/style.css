@@ -441,15 +441,17 @@ main aside .help a:hover i {
   box-shadow: 0px 0px 5px #551a8b;
 }
 main .zone-pop {
+  display: none;
   position: absolute;
   width: 600px;
-  height: 805px;
+  height: 790px;
   top: 105px;
-  right: 5px;
+  right: 30px;
   background: #fff;
   border-radius: 2px;
   border: 2px solid #4379d5;
   z-index: 3;
+  opacity: 0;
 }
 main .zone-pop .title {
   position: relative;
@@ -471,10 +473,10 @@ main .zone-pop .title h2 {
 }
 main .zone-pop .title button {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 50px;
-  height: 50px;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
   text-align: center;
   font-size: 26px;
   font-weight: bold;
@@ -482,6 +484,10 @@ main .zone-pop .title button {
   cursor: pointer;
   background: transparent;
   border: none;
+  transition: 0.5s;
+}
+main .zone-pop .title button:hover {
+  transform: rotate(90deg);
 }
 main .zone-pop .con {
   position: relative;
