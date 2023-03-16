@@ -494,7 +494,7 @@ main {
         
     }
 
-    .con {
+    .map-con {
         width: 100%;
         height: 100%;
         
@@ -503,7 +503,7 @@ main {
             position: relative;
             width: 100%;
             height: 50px;
-            top:0px;
+            top:0px; // 0px; or 활성 > 50px
             left:0px;
             //float: right;
             //border: 1px solid red;
@@ -524,6 +524,36 @@ main {
                 color: #fff;
                 z-index: 1;
                 //border: 1px solid red;
+            }
+
+            span {
+                position: absolute;
+                //top: 0px;
+                right: 20px;
+                //width: 50px;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                color: #fff;
+                cursor: pointer;
+                background: transparent;
+                border: none;
+                transition: 0.5s;
+                z-index: 1;
+                //border: 1px solid red;
+
+                a {
+                    color: #fff;
+                    transition: 0.5s;
+
+                    &:hover {
+                        //color: $hover-color;
+                        text-shadow: 0px 0px 5px #000;
+                    }
+                }
+                
             }
         }
         #vwmap {

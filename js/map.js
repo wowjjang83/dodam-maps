@@ -91,14 +91,14 @@ function vwmapMove(_lng,_lat,_addr, _title=""){
 
     if(_title != ""){
         $('.sch input').val(_title);
-        $('.con .title h1').text(_title);
+        $('.map-con .title h1').text(_title);
     }else{
         $('.sch input').val(_addr);
-        $('.con .title h1').text(_addr);
+        $('.map-con .title h1').text(_addr);
     }
 
-    // $('.con .title) 등장 animate
-    $('.con .title').animate({
+    // $('.map-con .title) 등장 animate
+    $('.map-con .title').animate({
         top: 50
     },500);
 
