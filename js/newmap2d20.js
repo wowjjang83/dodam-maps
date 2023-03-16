@@ -25,89 +25,90 @@ function vwmapBaseCreate(_layer, __lng=127.100616,__lat=37.402142){
      }; 
         
     vwmap = new vw.ol3.Map(_layer,  vw.ol3.MapOptions);
-}
-
-// 브이월드 맵 생성
-function vwmapCreate(_layer, __lng=127.100616,__lat=37.402142){
-
-    // __lng 값이 없으면 서을 lng값
-    const _lng = __lng;
-    const _lat = __lat;
-
-    //브이월드 WMTS(BASE) 지정
-    //http://api.vworld.kr/req/wmts/1.0.0/{key}/{layer}/{tileMatrix}/{tileRow}/{tileCol}.{tileType}
-    let Base = new ol.layer.Tile({
-        name: 'Base',
-        source: new ol.source.XYZ({
-            url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Base/{z}/{y}/{x}.png' // WMTS API 사용
-        })
-    });
-    let Satellite = new ol.layer.Tile({
-        name: 'Satellite',
-        source: new ol.source.XYZ({
-            url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Satellite/{z}/{y}/{x}.jpeg' // WMTS API 사용
-        })
-    });
-    let Hybrid = new ol.layer.Tile({
-        name: 'Hybrid',
-        source: new ol.source.XYZ({
-            url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Hybrid/{z}/{y}/{x}.png' // WMTS API 사용
-        })
-    });
-    //console.log("vwmapCreate() : " + _layer);
-    //console.log("_lat : " + _lat + ", _lng : " + _lng);
-    //map-content에 ol지도 지정
-    vwmap = new ol.Map({
-        target: _layer,
-        layers: [Satellite],
-        view: new ol.View({
-            center: new ol.proj.transform([__lng,__lat], 'EPSG:4326', vw_epsg),
-            zoom: 17,
-        })
-    })
-    //center: new ol.proj.transform([127.100616, 37.402142], 'EPSG:4326', vw_epsg),
-    //var vSAT = new vworld.Layers.Satellite('VSAT');
-    //vwmap.addLayer(vSAT);
-
-    let WMS_name, WMS_id;
-    WMS_id = "lp_pa_cbnd_bubun";
-    WMS_name = "WMS_LAYER";
-
-    var wms_title = '지적도';
-    var wms_val = 'lp_pa_cbnd_bubun,lp_pa_cbnd_bonbun';
+    vwmap.getView().setZoom(8);
+    /*
+    var _center = [ 14269340.84717533, 4359656.953474675 ];
+    vwmap.getView().setCenter(_center);
+    */
 
     
-    let wms_tile = new ol.layer.Tile({
-        name : WMS_name,
-        source : new ol.source.TileWMS({
-            url : 'https://api.vworld.kr/req/wms?',
-            params : {
-                LAYERS : wms_val,
-                STYLES : wms_val,
-                CRS : vw_epsg,
-                apikey : vw_apikey,
-                title : wms_title,
-                FORMAT : 'image/png',
-            }
-        })
-    });
-    vwmap.addLayer(wms_tile);
+	 vw.ol3.MapOptions = {
+        basemapType: vw.ol3.BasemapType.GRAPHIC
+      , controlDensity: vw.ol3.DensityType.EMPTY
+      , interactionDensity: vw.ol3.DensityType.BASIC
+      , controlsAutoArrange: true
+      , homePosition: vw.ol3.CameraPosition
+      , initPosition: vw.ol3.CameraPosition
+  }; 
+          
+  var vmap = new vw.ol3.Map("vmap",  vw.ol3.MapOptions);
+  
+    /* vw.ol3.SiteAlignType = {
+        NONE : "none",
+        TOP_LEFT:	"top-left",
+        TOP_CENTER : "top-center",
+        TOP_RIGHT : "top-right",
+        CENTER_LEFT: "center-left",
+        CENTER_CENTER: "center-center",
+        CENTER_RIGHT : "center-right",
+        BOTTOM_LEFT : "bottom-left",
+        BOTTOM_CENTER : "bottom-center",
+        BOTTOM_RIGHT : "bottom-right"
+    }; */
+    var options = {
+        map: vwmap
+        , site : vw.ol3.SiteAlignType.TOP_CENTER   //"top-left"
+        , vertical : false
+        , collapsed : false
+        , collapsible : false
+    };
 
-    // vwmap 줌인/줌아웃 버튼 비활성화
-    vwmap.getControls().forEach(function(control){
-        if(control instanceof ol.control.Zoom){
-            //vwmap.removeControl(control);
-        }
-    });
+    var _toolBtnList = [
+        new vw.ol3.button.Init(vwmap),
+        new vw.ol3.button.ZoomIn(vwmap),
+        new vw.ol3.button.ZoomOut(vwmap),
+        new vw.ol3.button.DragZoomIn(vwmap),
+        new vw.ol3.button.DragZoomOut(vwmap) ,
+        new vw.ol3.button.Pan(vwmap),				
+        new vw.ol3.button.Prev(vwmap),
+        new vw.ol3.button.Next(vwmap),
+        new vw.ol3.button.Full(vwmap),
+        new vw.ol3.button.Distance(vwmap),
+        new vw.ol3.button.Area(vwmap)  
+    ];
 
+    var toolBar = new vw.ol3.control.Toolbar(options);
+    toolBar.addToolButtons(_toolBtnList);
+    vwmap.addControl(toolBar);
 
-    //$(".ol-rotate-reset").css("display","none");
-} // End Function vwmapCreate()
+    setMapMode(vw.ol3.BasemapType.PHOTO_HYBRID);
+}// end vwmapBaseCreate()
+
+// 맵 모드 변경
+//setMode(vw.ol3.BasemapType.GRAPHIC); 2D배경지도
+//setMode(vw.ol3.BasemapType.GRAPHIC_GRAY); 2D배경지도 회색
+//setMode(vw.ol3.BasemapType.GRAPHIC_NIGHT); 2D배경지도 야간
+//setMode(vw.ol3.BasemapType.PHOTO); 2D항공지도
+//setMode(vw.ol3.BasemapType.PHOTO_HYBRID); 2D영상지도
+var _crrMapMode = 3;
+function setMapMode(basemapType,_id) {    
+    vwmap.setBasemapType(basemapType);
+    //console.log("asd");
+    $("map-mode-li-"+_crrMapMode).removeClass("active");
+    $("map-mode-li-"+_id).addClass("active");
+    _crrMapMode = _id;
+}
 
 // 브이월드 맵 이동
-function vwmapMove(_lng,_lat,_addr, _title=""){
-    //console.log("vwmapMove() : " + _lng + ", " + _lat);
-    vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], vw_epsg, vw_epsg));
+function vwmapMove(_lng, _lat,_addr, _title=""){
+    //console.log("_lng : "+_lng+", _lat : "+_lat);
+    _lng = parseFloat(_lng);
+    _lat = parseFloat(_lat);
+    var _center = [ _lng, _lat ];
+    vwmap.getView().setCenter(_center);
+    // zoom
+    vwmap.getView().setZoom(18);
+    //vwmap.getView().setCenter(new ol.proj.transform([_lng, _lat], "EPSG:3857", vw_epsg));
 
     if(_title != ""){
         $('.sch input').val(_title);
@@ -118,11 +119,20 @@ function vwmapMove(_lng,_lat,_addr, _title=""){
     }
 
     // $('.map-con .title) 등장 animate
+    
     $('.map-con .title').animate({
         top: 50
     },500);
+    
+    // 맵에 툴바 활성
+    //$('#vwmap .vw-toolbar').css('display', 'block');
+    // animate
+    $('#vwmap .vw-toolbar').animate({
+        top: 100,
+        opacity: 1
+    },500);
 
-    $('.sch .search-list').css('display', 'none');
+    $('.sch .search-list').css('display', 'none');   
 }
 
 // 폴리곤 그리기
@@ -303,4 +313,3 @@ function vwmapSearchAddrList(_opt1,_opt2,_keyword){
         }
     });
 }
-

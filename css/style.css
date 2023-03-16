@@ -616,7 +616,7 @@ main .map-con .title h1 {
   color: #fff;
   z-index: 1;
 }
-main .map-con .title span {
+main .map-con .title .setup-menu {
   position: absolute;
   right: 20px;
   height: 50px;
@@ -631,12 +631,48 @@ main .map-con .title span {
   transition: 0.5s;
   z-index: 1;
 }
-main .map-con .title span a {
+main .map-con .title .setup-menu ul li a {
   color: #fff;
-  transition: 0.5s;
+  transition: 0.2s;
 }
-main .map-con .title span a:hover {
+main .map-con .title .setup-menu ul li a:hover {
+  color: skyblue;
   text-shadow: 0px 0px 5px #000;
+  text-decoration: none;
+}
+main .map-con .map-mode {
+  position: absolute;
+  top: auto;
+  bottom: 10px;
+  left: 50%;
+  translate: -50%;
+  height: 30px;
+  border: 1px solid #4379d5;
+  border-radius: 5px;
+  background: #4379d5;
+  color: #fff;
+  z-index: 1;
+}
+main .map-con .map-mode ul {
+  position: relative;
+  top: 5px;
+  display: flex;
+  flex-direction: row;
+}
+main .map-con .map-mode ul li {
+  font-size: 14px;
+  padding: 0 10px;
+}
+main .map-con .map-mode ul li a {
+  color: #fff;
+}
+main .map-con .map-mode ul li a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+main .map-con .map-mode ul li:active {
+  background: rgb(0, 183, 255);
+  border-radius: 3px;
 }
 main .map-con #vwmap {
   position: absolute;
@@ -645,6 +681,19 @@ main .map-con #vwmap {
   top: 0px;
   left: 0px;
   z-index: 0;
+}
+main .map-con #vwmap .vw-notice {
+  display: none;
+}
+main .map-con #vwmap .vw-scale-line {
+  left: 60px;
+}
+main .map-con #vwmap .vw-logo {
+  left: 60px;
+}
+main .map-con #vwmap .vw-toolbar {
+  top: 0px;
+  opacity: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

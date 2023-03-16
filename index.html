@@ -8,14 +8,24 @@
     <link rel="stylesheet" href="css/style.css">
     
     <!-- jQuery library -->
+    <!-- 예전맵 API 쓸때 필요한것들
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
-    <!--<script src="http://openlayers.org/en/master/build/ol.js"></script>-->
-    <script src="http://map.vworld.kr/js/apis.do?type=Base&apiKey=429F4193-A25C-31FF-9695-4BE5FE4E43AD&
+    
+    <script src="http://map.vworld.kr/js/apis.do?type=Base&apiKey=DD59541F-5495-3F50-98F3-54BB5947859C&
     domain=localhost"></script>
-    <script src="https://kit.fontawesome.com/415777b3d1.js" crossorigin="anonymous"></script>
+    -->
+
+    <script defer src="https://kit.fontawesome.com/415777b3d1.js" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=DD59541F-5495-3F50-98F3-54BB5947859C&domain=localhost"></script>
+    
     <script defer src="js/apiData.js"></script>
+    <!--
     <script defer src="js/map.js"></script>
+    -->
+    <script defer src="js/newmap2d20.js"></script>
 </head>
 <body>
     <main>
@@ -110,14 +120,27 @@
         <div class="map-con">
             <div class="title">
                 <h1>주소나 장소명 타이틀</h1>
-                <span>
+                <span class="setup-menu">
                     <ul>
                         <li>
-                            <a href="#" active="false">구역계 설정</a>
+                            <a href="#" id="zone-setup-link" active="false">구역계 설정</a>
                         </li>
                     </ul>
                 </span>
             </div>
+            <span class="map-mode">
+                <ul>
+                    <li id="map-mode-li-1">
+                        <a href="javascript:setMapMode(vw.ol3.BasemapType.GRAPHIC,1)" active="false">기본지도</a>
+                    </li>
+                    <li id="map-mode-li-2">
+                        <a href="javascript:setMapMode(vw.ol3.BasemapType.PHOTO,2)" active="false">항공뷰</a>
+                    </li>
+                    <li id="map-mode-li-3">
+                        <a href="javascript:setMapMode(vw.ol3.BasemapType.PHOTO_HYBRID,3)" active="true">하이브리드</a>
+                    </li>
+                </ul>
+            </span>
             <div id="vwmap"></div>
         </div>
     </main>
@@ -163,7 +186,6 @@
 
     <script>
         $(document).ready(function(){
-            vwmapCreate("vwmap");
 
             // 로그인 버튼 클릭
             $('#main-login-btn').click(function(){
@@ -351,6 +373,12 @@
                     $('.map-con .title').animate({
                         top: 0
                     },500);
+
+                    // 맵에 툴바 비활성
+                    $('.vw-toolbar').animate({
+                        top: 0,
+                        opacity: 0
+                    },500);
                 }
             }
 
@@ -433,15 +461,15 @@
                     $('.zone-pop').css('display', 'none');
                 });
 
-                var _txt = $('.map-con .title span a').text();
+                var _txt = $('#zone-setup-link').text();
                 _txt = _txt.replace("[ ","");
                 _txt = _txt.replace(" ]","");
-                $('.map-con .title span a').text(_txt);
-                $('.map-con .title span a').attr("active","false");
+                $('#zone-setup-link').text(_txt);
+                $('#zone-setup-link').attr("active","false");
             });
 
             // .map-con .title span a 클릭시
-            $('.map-con .title span a').click(function(){
+            $('#zone-setup-link').click(function(){
                 if($(this).attr("active") == "false"){
                     var _txt = $(this).text();
                     _txt = "[ "+_txt+" ]";
@@ -453,11 +481,19 @@
                 }
             });
 
+            // 맵 모드
+            function mapModeActive(_val){
+                
+            }
+
             // 초기실행
             //$('.map-con .title span a').addClass('a.hover');
             schInputHolderTxt();
             // 포커스 input
             $('.sch input').focus();
+
+            //vwmapCreate("vwmap");
+            vwmapBaseCreate("vwmap");
         });
     </script>
 </body>
