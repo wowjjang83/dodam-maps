@@ -90,13 +90,93 @@ function vwmapBaseCreate(_layer, __lng=127.100616,__lat=37.402142){
 //setMode(vw.ol3.BasemapType.GRAPHIC_NIGHT); 2D배경지도 야간
 //setMode(vw.ol3.BasemapType.PHOTO); 2D항공지도
 //setMode(vw.ol3.BasemapType.PHOTO_HYBRID); 2D영상지도
-var _crrMapMode = 3;
+var _crrMapMode = 4;
 function setMapMode(basemapType,_id) {    
-    vwmap.setBasemapType(basemapType);
-    //console.log("asd");
+    //console.log($("#map-mode-li-4 a").attr("active"));
+    if(_id == 3){
+        var _3_active = $("#map-mode-li-3 a").attr("active");
+        if( _3_active == "false"){
+            /*
+            let Base = new ol.layer.Tile({
+                name: 'Base',
+                source: new ol.source.XYZ({
+                    url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Base/{z}/{y}/{x}.png' // WMTS API 사용
+                })
+            });
+            let Satellite = new ol.layer.Tile({
+                name: 'Satellite',
+                source: new ol.source.XYZ({
+                    url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Satellite/{z}/{y}/{x}.jpeg' // WMTS API 사용
+                })
+            });
+            let Hybrid = new ol.layer.Tile({
+                name: 'Hybrid',
+                source: new ol.source.XYZ({
+                    url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Hybrid/{z}/{y}/{x}.png' // WMTS API 사용
+                })
+            });
+
+            //map-content에 ol지도 지정
+            
+            vwmap = new ol.Map({
+                target: "vwmap",
+                layers: [Satellite],
+                view: new ol.View({
+                    center: vwmap.getView().getCenter(),
+                    zoom: vwmap.getView().getZoom(),
+                })
+            })
+            */
+
+            let Hybrid = new ol.layer.Tile({
+                name: 'Hybrid',
+                source: new ol.source.XYZ({
+                    url: 'http://api.vworld.kr/req/wmts/1.0.0/' + vw_apikey + '/Hybrid/{z}/{y}/{x}.png' // WMTS API 사용
+                })
+            });
+
+            //map-content에 ol지도 지정
+            
+            let WMS_name, WMS_id;
+            WMS_id = "lp_pa_cbnd_bubun";
+            WMS_name = "WMS_LAYER";
+        
+            var wms_title = '지적도';
+            var wms_val = 'lp_pa_cbnd_bubun,lp_pa_cbnd_bonbun';
+            
+            let wms_tile = new ol.layer.Tile({
+                name : WMS_name,
+                source : new ol.source.TileWMS({
+                    url : 'https://api.vworld.kr/req/wms?',
+                    params : {
+                        LAYERS : wms_val,
+                        STYLES : wms_val,
+                        CRS : vw_epsg,
+                        apikey : vw_apikey,
+                        title : wms_title,
+                        FORMAT : 'image/png',
+                        domain : "http://localhost"
+                    }
+                })
+            });
+            // wms_tile 투명도
+            wms_tile.setOpacity(0.8);
+            // wms_tile 배경투명
+            wms_tile.set('transparent', true);
+
+            //vwmap.addLayer(Hybrid);
+            vwmap.addLayer(wms_tile);            
+        }
+    }else{
+        vwmap.setBasemapType(basemapType);    
+    }
+    /*
     $("map-mode-li-"+_crrMapMode).removeClass("active");
     $("map-mode-li-"+_id).addClass("active");
-    _crrMapMode = _id;
+    */
+    $("#map-mode-li-"+_crrMapMode+" a").attr("active","false");
+    $("#map-mode-li-"+_id+" a").attr("active","true");
+    _crrMapMode = _id;    
 }
 
 // 브이월드 맵 이동
