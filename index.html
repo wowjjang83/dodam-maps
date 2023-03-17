@@ -85,6 +85,47 @@
             </div>
         </aside>
         <div class="zone-pop">
+            
+            <div class="tab-ui">
+                <ul>
+                    <li>
+                        <a href="#" idx="1" status="active">
+                            <i class="fa-sharp fa-solid fa-location-dot"></i>
+                            <p>위치</p>
+                            <span>
+                                <i class="fa-solid fa-caret-up"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" idx="2" status="">
+                            <i class="fa-sharp fa-solid fa-earth-americas"></i>
+                            <p>토지</p>
+                            <span>
+                                <i class="fa-solid fa-caret-up"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" idx="3" status="">
+                            <i class="fa-solid far fa-building"></i>
+                            <p>건축</p>
+                            <span>
+                                <i class="fa-solid fa-caret-up"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" idx="4" status="">
+                            <i class="fa-duotone fas fa-chart-pie"></i>
+                            <p>도시<br>계획</p>
+                            <span>
+                                <i class="fa-solid fa-caret-up"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div class="title">
                 <h2>구역계설정</h2>
                 <button type="button">
@@ -118,6 +159,7 @@
                     </div>
                 </section>
             </div>
+
         </div>
         <div class="map-con">
             <div class="title">
@@ -480,6 +522,50 @@
 
                     // 구역계 팝업
                     $("#zone-pop-icon").click();
+                }
+            });
+
+            // 구역계설정 탭메뉴 클릭시
+            $('.zone-pop .tab-ui a').click(function(){
+                var _idx = parseInt($(this).attr("idx"));
+
+                // status 가 active 인 .zone-pop .tab-ui a 의 idx 값을 구한다.
+                var _active_li = $('.zone-pop .tab-ui a[status="active"]').parent();
+
+                if($(this).attr("status") != "active"){
+                    _active_li.css("border","none");
+                    // _active_li 의 a>p, span css 변경
+                    _active_li.find("a>p, span").css("display","none");
+                    _active_li.find("a").css("top","0");
+                    
+                    $('.zone-pop .tab-ui a[status="active"]').attr("status","");
+                    $(this).attr("status","active");
+
+                    $(this).parent().find("a>p").css("display","block");
+                    $(this).parent().find("span").css("display","inline");
+                    
+
+                    if(_idx == 1){
+                        // 위치
+                        $(this).parent().css("border-bottom","1px solid #2f5597");
+                    }else if(_idx == 2){
+                        // 토지
+                        $(this).parent().css("border-top","1px solid #2f5597");
+                        $(this).parent().css("border-bottom","1px solid #2f5597");
+
+                        $(this).css("top","15px");
+                    }else if(_idx == 3){
+                        // 건축
+                        $(this).parent().css("border-top","1px solid #2f5597");
+                        $(this).parent().css("border-bottom","1px solid #2f5597");
+
+                        $(this).css("top","15px");
+                    }else if(_idx == 4){
+                        // 도시계획
+                        $(this).parent().css("border-top","1px solid #2f5597");
+
+                        $(this).css("top","15px");
+                    }
                 }
             });
 

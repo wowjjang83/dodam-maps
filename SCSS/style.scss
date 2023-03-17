@@ -308,7 +308,7 @@ main {
     }
 
     .zone-pop {
-        display: none;
+        //display: none;
         position: absolute;
         width: 600px;
         height: 790px;
@@ -319,7 +319,70 @@ main {
         border-radius: 2px;
         border:2px solid #4379d5;
         z-index: 3;
-        opacity: 0;
+        //opacity: 0;    
+
+        .tab-ui {
+            position: absolute;
+            width: 60px;
+            height: 738px;
+            top: 50px;
+            left: -65px;
+            //border: 1px solid red;
+            background: #fff;
+            border-radius: 10px;
+            text-align: center;
+
+            ul {
+                padding: 5px;
+                margin-top: 10px;
+
+                li {
+                    
+                    padding: 5px;
+                    margin-top: 10px;
+                    border-bottom: 1px solid #2f5597;
+
+                    a {
+                        position: relative;
+                        color: #2f5597;
+                        transition: 0.3s;
+
+                        &:hover {
+                            color: #4379d5;
+                            text-decoration: none;
+                        }
+
+                        i {
+                            font-size: 34px;
+                        }
+
+                        p {
+                            font-size: 12px;
+                            font-weight: bold;
+                        }
+
+                        span {
+                            position: relative;
+                            top: -40px;
+                            left: 27px;
+                            
+                            i {
+                                font-size: 16px;
+                                transform: rotate(-90deg);
+                            }                            
+                        }
+                    }
+
+                    &:nth-of-type(2),&:nth-of-type(3),&:nth-of-type(4) {
+                        border-bottom: none;
+
+                        a>p, span {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
 
         .title {
             position: relative;
@@ -361,7 +424,7 @@ main {
                     transform: rotate(90deg);
                 }
             }
-        }
+        }       
 
         .con {
             //display: inline-block;
