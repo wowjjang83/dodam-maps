@@ -441,6 +441,7 @@ main aside .help a:hover i {
   box-shadow: 0px 0px 5px #551a8b;
 }
 main .zone-pop {
+  display: none;
   position: absolute;
   width: 600px;
   height: 790px;
@@ -450,6 +451,7 @@ main .zone-pop {
   border-radius: 2px;
   border: 2px solid #4379d5;
   z-index: 3;
+  opacity: 0;
 }
 main .zone-pop .tab-ui {
   position: absolute;
@@ -636,6 +638,96 @@ main .zone-pop .con .sec2 .con table tr td {
 main .zone-pop .con .sec2 .con .pg {
   text-align: center;
   padding: 10px;
+}
+main .latest-list-pop {
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  width: 300px;
+  height: auto;
+  min-height: 750px;
+  border: 1px solid #4379d5;
+  border-radius: 2px;
+  background: #fff;
+  z-index: 3;
+  display: none;
+  opacity: 0;
+}
+main .latest-list-pop .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: 0.5s;
+}
+main .latest-list-pop .close-btn:hover {
+  transform: rotate(90deg);
+}
+main .latest-list-pop article {
+  width: 100%;
+}
+main .latest-list-pop article .title {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  background: #4379d5;
+}
+main .latest-list-pop article .title h3 {
+  margin-top: 5px;
+  font-size: 18px;
+}
+main .latest-list-pop article .list-box {
+  width: 100%;
+  padding: 10px;
+}
+main .latest-list-pop article .list-box ul li {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+main .latest-list-pop article .list-box ul li a {
+  color: #4379d5;
+  font-size: 12px;
+  line-height: 20px;
+}
+main .latest-list-pop article .list-box ul li a:hover {
+  color: skyblue;
+  text-decoration: none;
+}
+main .latest-list-pop .art2 .title {
+  background: #4489ff;
+}
+main .latest-list-pop .art2 .more {
+  position: relative;
+  width: 70px;
+  height: 30px;
+  left: 73.5%;
+  background: #4489ff;
+  margin-bottom: 10px;
+  padding: 7px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+main .latest-list-pop .art2 .more a {
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+main .latest-list-pop .art2 .more:hover a {
+  color: skyblue;
+  text-decoration: none;
 }
 main .map-con {
   width: 100%;

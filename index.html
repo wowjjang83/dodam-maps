@@ -84,8 +84,7 @@
                 </a>
             </div>
         </aside>
-        <div class="zone-pop">
-            
+        <div class="zone-pop">            
             <div class="tab-ui">
                 <ul>
                     <li>
@@ -161,6 +160,79 @@
             </div>
 
         </div>
+        <div class="latest-list-pop">
+            <button class="close-btn" type="button">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <article class="art1">
+                <div class="title">
+                    <h3>최근 주소검색 리스트</h3>
+                </div>
+                <div class="list-box">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                    </ul>
+                </div>                
+            </article>
+            <article class="art2">
+                <div class="title">
+                    <h3>최근 구역계 저장 리스트</h3>
+                </div>
+                <div class="list-box">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                대전 유성구 학하서로 111 한밭대앞셀프주유소<br>대전 유성구 덕명동 613-1
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="more">
+                    <a href="#">
+                        +더보기
+                    </a>
+                </div>                
+            </article>
+        </div>
         <div class="map-con">
             <div class="title">
                 <h1>주소나 장소명 타이틀</h1>
@@ -172,7 +244,7 @@
                     </ul>
                 </span>
             </div>
-            <span class="map-mode">
+            <div class="map-mode">
                 <ul>
                     <li id="map-mode-li-1">
                         <a href="javascript:setMapMode(vw.ol3.BasemapType.GRAPHIC,1)" active="false">기본지도</a>
@@ -184,7 +256,7 @@
                         <a href="javascript:setMapMode(vw.ol3.BasemapType.PHOTO_HYBRID,3)" active="true">하이브리드</a>
                     </li>
                 </ul>
-            </span>
+            </div>
             <div id="vwmap"></div>
         </div>
     </main>
@@ -485,14 +557,23 @@
                 sch_focus = true;
             });
 
-            // 구역계 팝업 열기
+            // 최근리스트 팝업 활성
             $("#zone-pop-icon").click(function(){
-                $('.zone-pop').css('display', 'block');
-                
-                $('.zone-pop').animate({
+                $('.latest-list-pop').css('display', 'block');
+                $('.latest-list-pop').animate({
                     opacity: 1,
-                    right: 5
-                },500);
+                    left: 55
+                },300);
+            });
+
+            // 최근리스트 팝업 비활성
+            $('.latest-list-pop .close-btn').click(function(){
+                $('.latest-list-pop').animate({
+                    opacity: 0,
+                    left: 100
+                },300, function(){
+                    $('.latest-list-pop').css('display', 'none');
+                });
             });
 
             // 구역계창 닫기 버튼 클릭
@@ -512,7 +593,7 @@
                 $('#zone-setup-link').attr("active","false");
             });
 
-            // .map-con .title span a 클릭시
+            // 구역계설정 팝업
             $('#zone-setup-link').click(function(){
                 if($(this).attr("active") == "false"){
                     var _txt = $(this).text();
@@ -521,7 +602,14 @@
                     $(this).attr("active","true");
 
                     // 구역계 팝업
-                    $("#zone-pop-icon").click();
+                    //$("#zone-pop-icon").click();
+                    
+                    $('.zone-pop').css('display', 'block');
+                    $('.zone-pop').animate({
+                        opacity: 1,
+                        right: 5
+                    },500);
+                    
                 }
             });
 

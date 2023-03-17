@@ -308,7 +308,7 @@ main {
     }
 
     .zone-pop {
-        //display: none;
+        display: none;
         position: absolute;
         width: 600px;
         height: 790px;
@@ -319,7 +319,7 @@ main {
         border-radius: 2px;
         border:2px solid #4379d5;
         z-index: 3;
-        //opacity: 0;    
+        opacity: 0;    
 
         .tab-ui {
             position: absolute;
@@ -556,6 +556,117 @@ main {
             }
         }
         
+    }
+
+    .latest-list-pop {
+        position: absolute;
+        top: 50px;
+        left: 100px;//60px
+        width: 300px;
+        height: auto;
+        min-height: 750px;
+        border: 1px solid #4379d5;
+        border-radius: 2px;
+        background: #fff;
+        z-index: 3;
+        display: none;
+        opacity: 0;
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            transition: 0.5s;
+
+            &:hover {
+                //color: #ccc;
+                //text-shadow: 0px 0px 5px rgba(skyblue, 1);
+                transform: rotate(90deg);
+            }
+        }
+
+        article {
+            width: 100%;
+            
+            .title {
+                width: 100%;
+                height: 50px;
+                text-align: center;
+                padding: 10px;
+                color: #fff;
+                background: #4379d5;
+
+                h3 {
+                    margin-top: 5px;
+                    font-size: 18px;
+                }
+            }
+                
+            .list-box {
+                width: 100%;
+                padding: 10px;
+                ul {
+
+                    li {
+                        border: 1px solid #eee;
+                        border-radius: 5px;
+                        padding: 10px;
+                        margin-bottom: 10px;
+
+                        a {
+                            color:#4379d5;
+                            font-size: 12px;
+                            line-height: 20px;
+                            
+                            &:hover {
+                                color: $hover-color;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .art2 {
+            .title {
+                background: #4489ff;
+            }
+
+            .more {
+                position: relative;
+                width: 70px;
+                height: 30px;
+                left: 73.5%;
+                background: #4489ff;
+                margin-bottom: 10px;
+                padding: 7px;
+                text-align: center;
+                border-radius: 5px;
+                cursor: pointer;
+
+                a {
+                    color:#fff;
+                    font-weight: bold;
+                    font-size: 12px;
+                }
+                &:hover {
+                    a{
+                        color: $hover-color;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
     }
 
     .map-con {
