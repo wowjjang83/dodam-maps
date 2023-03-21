@@ -7,9 +7,9 @@ let vwmap;
 let vw_apikey = "DD59541F-5495-3F50-98F3-54BB5947859C";
 
 //좌표계
-//let vw_epsg = 'EPSG:3857';
+let vw_epsg = 'EPSG:3857';
 //let vw_epsg = 'EPSG:4326';
-let vw_epsg = 'EPSG:900913';
+//let vw_epsg = 'EPSG:900913';
 
 // 브이월드 베이스맵
 // 참고 : https://www.vworld.kr/dev/v4dv_opn2dmap2exam_s002.do?exaIde=EXAID_07000000000002&tabMenu=m1&searchKeyword=
@@ -41,7 +41,7 @@ function vwmapBaseCreate(_layer, __lng=127.100616,__lat=37.402142){
       , initPosition: vw.ol3.CameraPosition
   }; 
           
-  var vmap = new vw.ol3.Map("vmap",  vw.ol3.MapOptions);
+  //var vmap = new vw.ol3.Map("vmap",  vw.ol3.MapOptions);
   
     /* vw.ol3.SiteAlignType = {
         NONE : "none",
@@ -82,6 +82,27 @@ function vwmapBaseCreate(_layer, __lng=127.100616,__lat=37.402142){
     vwmap.addControl(toolBar);
 
     setMapMode(vw.ol3.BasemapType.PHOTO_HYBRID);
+
+    vwLeftClickEvent(vwmap);
+    ////////////
+    /*
+    var wmsLayer = new vw.Layers();
+    wmsSource = new vw.source.TileWMS();
+    wmsSource.setParams("tilesize=256");
+    wmsSource.setLayers("LP_PA_CBND_BUBUN,LP_PA_CBND_BONBUN".toLowerCase());
+    wmsSource.setStyles("LP_PA_CBND_BUBUN_WEBGL,LP_PA_CBND_BONBUN_WEBGL".toLowerCase());
+    wmsSource.setFormat("image/png");
+    wmsSource.setUrl("https://api.vworld.kr/req/wms?Key="+vw_apikey);
+    var wmsTile = new vw.layer.Tile(wmsSource);
+    wmsLayer.add(wmsTile);
+    vwmap.addLayer(wmsLayer);
+    */
+
+    //vwmap.onClick.addEventListener(wfsEvent);
+
+    // 이벤트 지우기
+    // vwmap.onClick.removeEventListener(wfsEvent)
+
 }// end vwmapBaseCreate()
 
 // 맵 모드 변경
@@ -218,6 +239,7 @@ function vwmapMove(_lng, _lat,_addr, _title=""){
 // 폴리곤 그리기
 function addVwmapPolygon(coordinates,_pnu,_jibun){
 
+    console.log("addVwmapPolygon coordinates : ");
     let polygon_feature = new ol.Feature({
         geometry: new ol.geom.Polygon([ coordinates ])
         
@@ -260,22 +282,7 @@ function addVwmapPolygon(coordinates,_pnu,_jibun){
     // 마우스 오버 이벤트 제어
     // 나중에 추가 테스트
 
-    /* 클릭 이벤트 제어 */
-    vwmap.on("click", function(evt) {
-        var coordinate = evt.coordinate //좌표정보
-        var pixel = evt.pixel
-        var cluster_features = [];
-        var features = [];
-
-        //선택한 픽셀정보로  feature 체크 
-        vwmap.forEachFeatureAtPixel(pixel, function(feature, layer) {
-            var feature_title = feature.get("title");
-            var layer_title = layer.get("title");
-
-            // 나중에 추가 테스트
-            
-        });
-    });
+    
 
     vector_layer.set('name', 'polygon_layer'); // 레이어 이름 설정
     vector_layer.set('type', 'polygon'); // 레이어 타입 설정
@@ -286,7 +293,7 @@ function addVwmapPolygon(coordinates,_pnu,_jibun){
 } // End Function addVwmapPolygon()
 
 function vwmapSearchAddr(_opt1, _opt2, _addr){
-    console.log("vwmapSearchAddr() 함수실행 : " + _addr);
+    //console.log("vwmapSearchAddr() 함수실행 : " + _addr);
     // ajax
     $.ajax({
         url: "https://api.vworld.kr/req/search",
@@ -304,7 +311,7 @@ function vwmapSearchAddr(_opt1, _opt2, _addr){
         },
         dataType: "jsonp",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.response.status == "OK"){
                 var items = data.response.result.items;
                 var lat = items[0].point.y;
@@ -324,6 +331,8 @@ function vwmapSearchAddr(_opt1, _opt2, _addr){
                     
                 }
 
+                setMapMode(vw.ol3.BasemapType.PHOTO,2);
+                setMapMode('연속지적도',3);
                 vwmapMove(lng,lat,_get_addr,_title);
             }
         }
@@ -351,7 +360,7 @@ function vwmapSearchAddrList(_opt1,_opt2,_keyword){
         },
         dataType: "jsonp",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.response.status == "OK"){
                 var items = data.response.result.items;
                 //var _tot = (items.length>5)? 5:items.length;
@@ -361,7 +370,7 @@ function vwmapSearchAddrList(_opt1,_opt2,_keyword){
                 var _addr = "";
                 var _title = "";
 
-                console.log("_opt1 : "+_opt1);
+                //console.log("_opt1 : "+_opt1);
                 for(var i=0; i<items.length; i++){
                     var _lng = items[i].point.x;
                     var _lat = items[i].point.y;
@@ -393,3 +402,239 @@ function vwmapSearchAddrList(_opt1,_opt2,_keyword){
         }
     });
 }
+
+// 지도 클릭 이벤트
+var wfsEvent = function(windowPosition, ecefPosition, cartographic, featureInfo, event) {
+    var mh = getBuffer(cartographic.longitudeDD,cartographic.latitudeDD);
+    let min = [cartographic.longitudeDD-mh[0],cartographic.latitudeDD-mh[1]]
+    let max = [cartographic.longitudeDD+mh[0],cartographic.latitudeDD+mh[1]]
+    let box = min[0]+","+min[1]+","+max[0]+","+max[1]
+    //var url = `https://api.vworld.kr/req/wfs?key=[인증키]&SERVICE=WFS&version=1.1.0&request=GetFeature&TYPENAME=lp_pa_cbnd_bubun&OUTPUT=application/json&SRSNAME=EPSG:4326&BBOX=${box}`;
+    var url = `https://api.vworld.kr/req/wfs?key=${vw_apikey}&SERVICE=WFS&version=1.1.0&request=GetFeature&TYPENAME=lp_pa_cbnd_bubun&OUTPUT=application/json&SRSNAME=${vw_epsg}&BBOX=${box}`;
+    url = "https://map.vworld.kr/proxy.do?url=" + encodeURIComponent(url);
+    // parser 설명.
+    // parser 생성자.
+    var parser = new vw.GMLParser();
+    parser.setId("aaaa");//아이디 부여
+    //var featureInfos = parser.readTemp(vw.GMLParserType.GEOJSON, url, "EPSG:900913");
+    // data 읽기. parser.read( 데이터타입, 데이터경로, 데이터좌표계)
+    // 전달되는 좌표계를 의미하며, 이 좌표를 웹지엘에서는 EPSG:4326으로 변환하여 사용합니다.
+    // 데이터타입. vw.GMLParserType { GEOJSON, GML1, GML2, GML2 }
+    //featureInfos = parser.read(vw.GMLParserType.GEOJSON, url, "EPSG:4326");
+    featureInfos = parser.read(vw.GMLParserType.GEOJSON, url, vw_epsg);
+    //console.log("featureInfos :" , featureInfos);
+    var options =         {
+        isTerrain : true,    // 지형 따라 출력시 true, 지면에서 위로 출력시 false
+        width : 50,      // 선의 경우 크기지정.
+        material : new vw.Color(0,255,0,255).ws3dColor.withAlpha(0.2),  // RGBA A값만 255이하로 주면 투명 또는 withAlpha(1.0~0.1)로 설정.
+        outline : true,      // 아웃라인지정시 true, 아웃라인 미지정 false
+        outlineWidth : 5,    // 아웃라인 너비.
+        outlineColor : vw.Color.YELLOW.ws3dColor,    // 아웃라인 색상.
+        clampToGround : true,    // 적용이 안되는 것 같습니다.
+        height : 1600.0
+    };
+    // 출력 색상등 지정.
+    featureInfos.setOption(options);
+    // Point의 경우 이미지 설정. options 항목이 필요없음.
+    //featureInfos.setImage("https://map.vworld.kr/images/comm/symbol_05.png");
+    // 출력 좌표 설정.
+    featureInfos.makeCoords();//생성
+    featureInfos.show(); //뷰
+};
+
+//대략적인 마우스 클릭 크기에 맞는 BBOX 영역 계산
+var getBuffer = function(x,y){
+    position = vwmap.getCurrentPosition().position
+    // var x = position.x
+    // var y = position.y
+    var z = position.z
+    //111,000KM  1도 단위
+    var m = 1/(111000/z*1.48*50);
+    var h = 1/(111000/z*1.85*50);
+    return [m,h];
+}
+
+// 우클릭 이벤트
+const onRightClick = (event) => {
+    event.preventDefault()
+    //console.log("우클릭");
+
+    // 이벤트 발생
+    if($('#zone-setup-link').attr("active") == "true")    {
+        
+        console.log("우클릭");
+        // #context-menu 등록
+        /*
+        var contextMenu = document.getElementById("context-menu");
+        contextMenu.style.display = "block";
+        contextMenu.style.left = event.clientX + "px";
+        contextMenu.style.top = event.clientY + "px";
+        $("#context-menu").css("z-index", "4");
+        */
+
+        // vwmap addLayer
+        //var layer = new vwmap.Layer();
+        //layer.setId("context-menu-layer");
+        //layer.setZIndex(100);
+        //vwmap.addLayer(layer);
+
+        // 메세지 확인/취소 alert
+        var message = "필지를 삭제하시겠습니까?";
+        var result = confirm(message);
+        if(result)  {
+            console.log("삭제");
+        }else{
+            console.log("취소");
+        }
+    }
+}
+// onRightClick 등록
+addEventListener("contextmenu", onRightClick, false);
+
+let zone_add_list = [];
+
+/* 클릭 이벤트 제어 */
+function vwLeftClickEvent(_map){
+    _map.on("click", function(evt) {
+        var coordinate = evt.coordinate //좌표정보
+        var pixel = evt.pixel
+        var cluster_features = [];
+        var features = [];
+
+        var min = vwmap.getCoordinateFromPixel([evt.pixel[0] -4,evt.pixel[1]+4])
+        var max = vwmap.getCoordinateFromPixel([evt.pixel[0] +4,evt.pixel[1]-4])
+        var box = min[0]+","+min[1]+","+max[0]+","+max[1]
+        //console.log("box : " + box);
+
+        var x = coordinate[0];
+        var y = coordinate[1];
+
+        // 구역계설정 중일때만
+        if($('#zone-setup-link').attr("active") == "true")    {
+
+            $.ajax({
+                type : "get",
+                url : "http://api.vworld.kr/req/wfs?key="+vw_apikey+"&domain=http://localhost:8080&SERVICE=WFS&version=1.1.0&"+
+                    "request=GetFeature&TYPENAME=lp_pa_cbnd_bubun&OUTPUT=text/javascript&SRSNAME="+vw_epsg+"&"+
+                        "BBOX="+box+"&server=dev",
+                dataType : 'jsonp',
+                async : false,
+                jsonpCallback:"parseResponse",
+                success : function(data) {
+                    
+                    var geoJson = new ol.format.GeoJSON();
+                    var wfs_feature = geoJson.readFeatures(data);
+                    var vectorSource = new ol.source.Vector({features:wfs_feature});
+                    var vector_layer = new ol.layer.Vector({
+                            source: vectorSource
+                    })
+                
+                    //console.log("data : "+JSON.stringify(data));
+                    // JSON.stringify(data);
+                    var jdataObj =  JSON.parse(JSON.stringify(data));
+                    console.log("jdataObj : "+JSON.stringify(jdataObj));
+                    // jdataObj pnu
+                    var pnu = jdataObj.features[0].properties.pnu;
+                    var addr = jdataObj.features[0].properties.addr;
+                    // 면적
+
+                    var _layer_name = pnu;
+                    //vector_layer.set("name",_layer_name);
+
+                    var isExist = false;
+
+                    for(var i=0; i<zone_add_list.length; i++){
+                        //console.log("저장된 필지 : "+zone_add_list[i].get("name")+ " / 클릭한 필지 : "+_layer_name);
+                        if(zone_add_list[i].layer.get("name") == _layer_name){
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    
+                    //console.log("isExist : "+isExist);
+                    // 중복 클릭이 아니면
+                    if(isExist == false){
+                        // 레이어 추가
+                        vector_layer.set("name",_layer_name);
+                        zone_add_list.push({"layer":vector_layer, "pnu":pnu, "addr":addr, "name":_layer_name, "type":"polygon"});
+                        vwmap.addLayer(vector_layer);
+                    }else{
+                        /*
+                        var geom = evt.target;
+                        if (geom instanceof ol.geom.Polygon) {
+                            var output = formatArea(geom); //영역계산
+                            tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                        }
+                        console.log("output : "+output);
+                        */
+
+                        // 중복클릭이면 삭제
+                         // 메세지 확인/취소 alert
+                        var message = "주소 : "+addr+"\nPNU : "+pnu+"\n필지를 삭제하시겠습니까?";
+                        var result = confirm(message);
+                        if(result)  {
+                            console.log("삭제");
+                            var thisLayer = vwmap.getLayerByName(_layer_name);
+                            vwmap.removeLayer(thisLayer);
+                            // zone_add_list 에서 삭제
+                            for(var i=0; i<zone_add_list.length; i++){
+                                if(zone_add_list[i].layer.get("name") == _layer_name){
+                                    zone_add_list.splice(i,1);
+                                    break;
+                                }
+                            }
+                        }else{
+                            console.log("취소");
+                        }
+
+                    }
+
+                    zoneAddToTable();
+                },
+                error : function(xhr, stat, err) {
+                }
+                
+            });
+            
+        }// end if // 구역계설정 중일때만
+        
+    });// end _map.on("click")
+}// end function vwLeftClickEvent()
+
+// 영역 면적계산
+/*
+var formatArea = function (polygon) {
+    var area = ol.sphere.getArea(polygon);
+    var output;
+    if (area > 10000) {
+      output = (Math.round(area / 1000000 * 100) / 100) +
+        ' ' + 'km<sup>2</sup>';
+    } else {
+      output = (Math.round(area * 100) / 100) +
+        ' ' + 'm<sup>2</sup>';
+    }
+    return output;
+  };
+  */
+
+//구역계 설정 > 위치 > 소재지 > 필지추가 테이블 변경
+function zoneAddToTable(){
+    var zone_add_table = "";
+    var zone_tb_hd = "<tr><th>PNU</th><th>주소</th><th>면적</th></tr>";
+
+    for(var i=0; i<zone_add_list.length; i++){
+        zone_add_table += "<tr>";
+        zone_add_table += "<td>"+zone_add_list[i].pnu+"</td>";
+        zone_add_table += "<td>"+zone_add_list[i].addr+"</td>";
+        zone_add_table += "<td>면적</td>";
+        //zone_add_table += "<td><button type='button' class='btn btn-default btn-sm' onclick='zoneAddRemove("+i+")'>삭제</button></td>";
+
+        zone_add_table += "</tr>";
+    }
+
+    $("#zone-loc").empty();
+    $("#zone-loc").html(zone_tb_hd);
+    $("#zone-loc").html(zone_add_table);
+}
+  
+/////////////////////////////////
