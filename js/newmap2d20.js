@@ -514,7 +514,7 @@ function vwLeftClickEvent(_map){
 
             $.ajax({
                 type : "get",
-                url : "http://api.vworld.kr/req/wfs?key="+vw_apikey+"&domain=http://localhost:8080&SERVICE=WFS&version=1.1.0&"+
+                url : "https://api.vworld.kr/req/wfs?key="+vw_apikey+"&domain=http://localhost:8080&SERVICE=WFS&version=1.1.0&"+
                     "request=GetFeature&TYPENAME=lp_pa_cbnd_bubun&OUTPUT=text/javascript&SRSNAME="+vw_epsg+"&"+
                         "BBOX="+box+"&server=dev",
                 dataType : 'jsonp',
